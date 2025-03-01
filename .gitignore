@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# connect_bundle
+app/connect_bundle
+
 # Distribution / packaging
 .Python
 build/
