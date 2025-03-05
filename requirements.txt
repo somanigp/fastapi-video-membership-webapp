@@ -10,3 +10,4 @@ email-validator  # for email validation
 argon2-cffi # for password hashing
 pytest # for automated unit testing, cmd : pytest <folder_path>
 jinja2 # for templating
+# NOTE : Use pip show <package_name> to get more info about the package

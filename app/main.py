@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+import pathlib
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates  # NOTE Can be used to render/ Can use things other than HTML. Use it to send text messages or as a template engine. 
 from cassandra.cqlengine.management import sync_table
 from . import db, config  # or can use from app.db import func.
 from contextlib import asynccontextmanager  # New equivalent to on_event
@@ -25,13 +28,22 @@ async def lifespan(app: FastAPI):  # app is input argument of type FastAPI
     # DB_SESSION.shutdown()
     print("App is shutting down...")  # Equivalent to @app.on_event("shutdown")
     
+
+BASE_DIR = pathlib.Path(__file__).resolve().parent  # Parent of curr dir, cross platform and cross system
+TEMPLATE_DIR = BASE_DIR / "templates"
     
 app = FastAPI(lifespan=lifespan)
+templates = Jinja2Templates(directory=str(TEMPLATE_DIR))  # App is not tied to this "templates"
 
-
-@app.get("/")
-def homepage():
-    return {"hello":"world"}  # json data -> REST API , by default
+# NOTE : By default any sort of req in fastapi is gonna res with json obj as it is for REST api.
+@app.get("/", response_class=HTMLResponse)
+def homepage(request: Request):
+    # return {"hello":"world"}  # json data -> REST API , by default
+    context = {
+        "request": request,  # This context by default with Jinja templates we need to pass with req itself, compulsory. Other variables can be added.
+        "username": "Govind"
+    }
+    return templates.TemplateResponse("home.html", context)  # home.html is relative path to templates folder
 
 @app.get("/users")
 def users_list_view():
