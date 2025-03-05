@@ -6,3 +6,7 @@ python-decouple  # manage environment variables
 pydantic  # data validation
 pydantic-settings  # for importing BaseSettings
 python-dotenv  # for importing load_dotenv. We dont see environment variables in terminal, but this package will help us to load them when we run the app.
+email-validator  # for email validation
+argon2-cffi # for password hashing
+pytest # for automated unit testing, cmd : pytest <folder_path>
+jinja2 # for templating

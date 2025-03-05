@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):  # app is input argument of type FastAPI
     # await db.connect()  # Equivalent to startup
     
     global DB_SESSION
-    DB_SESSION = db.get_session()  # setting to global variable so if I want to use it anywhere else, I dont need to re-initialize it.
+    DB_SESSION = db.get_session()  # setting to global variable so if I want to access it anywhere else, I dont need to re-initialize it.
     sync_table(User)  # Need to sync whenever new table created or schema change, else gives error when creating object. And does the mapping
     print("tables synced")
      
